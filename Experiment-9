@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <string.h>
+void decodePlayfair(char* code) {
+    int i;
+    for (i = 0; i < strlen(code); i += 2) {
+        printf("%c", code[i]);
+    }
+}
+int main() {
+    char code[] = "KXJEY UREBE ZWEHE WRYTU HEYFS KREHE GOYFI WTTTU OLKSY CAJPO BOTEI ZONTX BYBNT GONEY CUZWR GDSON SXBOU YWRHE BAAHY USEDQ";
+    printf("Decoded message: ");
+    decodePlayfair(code);
+}

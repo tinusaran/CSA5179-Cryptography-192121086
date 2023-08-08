@@ -1,0 +1,15 @@
+import generate_round_keys, encrypt_block
+def ctr_encrypt(plaintext, key, counter):
+    ciphertext = []
+    round_keys = generate_round_keys(key)
+    for block in plaintext:
+        encrypted_counter = encrypt_block(counter, round_keys)
+        encrypted_block = bin(int(block, 2) ^ int(encrypted_counter, 2))[2:].zfill(8)
+        ciphertext.append(encrypted_block)
+        counter = bin(int(counter, 2) + 1)[2:].zfill(8)
+    return ciphertext
+plaintext = ['00000001', '00001000', '00010000']
+key = '0111111101'
+counter = '00000000'
+ciphertext = ctr_encrypt(plaintext, key, counter)
+print("Ciphertext:", ciphertext)

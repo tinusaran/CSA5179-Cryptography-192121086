@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <string.h>
+void encryptMessage(char matrix[5][5], char message[]) {
+}
+int main() {
+    char matrix[5][5] = {
+        {'M', 'F', 'H', 'I', 'K'},
+        {'U', 'N', 'O', 'P', 'Q'},
+        {'Z', 'V', 'W', 'X', 'Y'},
+        {'E', 'L', 'A', 'R', 'G'},
+        {'D', 'S', 'T', 'B', 'C'}
+    };
+    char message[] = "Must see you over Cadogan West. Coming at once.";
+    encryptMessage(matrix, message);
+    printf("Encrypted Message: %s\n", message);
+}

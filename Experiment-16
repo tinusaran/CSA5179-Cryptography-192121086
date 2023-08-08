@@ -1,0 +1,32 @@
+def calculate_letter_frequencies(ciphertext):
+    frequencies = {}
+    total_letters = 0
+    for char in ciphertext:
+        if char.isalpha():
+            char = char.lower()
+            frequencies[char] = frequencies.get(char, 0) + 1
+            total_letters += 1
+    for char in frequencies:
+        frequencies[char] = frequencies[char] / total_letters
+    return frequencies
+def letter_frequency_attack(ciphertext):
+    english_frequencies = {
+        'a': 0.02134, 'b': 0.01492, 'c': 0.02782, 'd': 0.04253, 'e': 0.12702,
+        'f': 0.02228, 'g': 0.02015, 'h': 0.06094, 'i': 0.06966, 'j': 0.00153,
+        'k': 0.00772, 'l': 0.04025, 'm': 0.02406, 'n': 0.06749, 'o': 0.07507,
+        'p': 0.01929, 'q': 0.00095, 'r': 0.05987, 's': 0.06327, 't': 0.09056,
+        'u': 0.02758, 'v': 0.00789, 'w': 0.02360, 'x': 0.00150, 'y': 0.01974,
+        'z': 0.00074
+    }
+    frequencies = calculate_letter_frequencies(ciphertext)
+    sorted_frequencies = sorted(frequencies.items(), key=lambda x: x[1], reverse=True)
+    mapping = {}
+    for i in range(len(sorted_frequencies)):
+        cipher_char = sorted_frequencies[i][0]
+        english_char = sorted(english_frequencies.items(), key=lambda x: abs(x[1] - sorted_frequencies[i][1]))[0][0]
+        mapping[cipher_char] = english_char
+    decrypted_text = ''.join(mapping.get(char.lower(), char) for char in ciphertext)
+    return decrypted_text
+ciphertext = "Yjn ykij yjrjvk xvrhvj."
+decrypted_text = letter_frequency_attack(ciphertext)
+print(decrypted_text)

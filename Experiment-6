@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <ctype.h>
+int modInverse(int a, int m) {
+    a = a % m;
+    for (int x = 1; x < m; x++) {
+        if ((a * x) % m == 1) {
+            return x;
+        }
+    }
+    return -1;
+}
+void affineEncrypt(char plaintext[], int a, int b) {
+    int i, encryptedChar;
+    for (i = 0; plaintext[i] != '\0'; i++) {
+        if (isalpha(plaintext[i])) {
+            if (islower(plaintext[i])) {
+                encryptedChar = ((a * (plaintext[i] - 'a') + b) % 26) + 'a';
+            } else if (isupper(plaintext[i])) {
+                encryptedChar = ((a * (plaintext[i] - 'A') + b) % 26) + 'A';
+            }
+            printf("%c", encryptedChar);
+        } else {
+            printf("%c", plaintext[i]);
+        }
+    }
+    printf("\n");
+}
+int main() {
+    char plaintext[100];
+    int a, b;
+    printf("Enter the plaintext: ");
+    scanf("%[^\n]s", plaintext);
+    printf("Enter the value of 'a' (should be coprime with 26): ");
+    scanf("%d", &a);
+    printf("Enter the value of 'b' (integer): ");
+    scanf("%d", &b);
+    int m = 26;
+    int modInverseA = modInverse(a, m);  
+    if (modInverseA == -1) {
+        printf("Error: 'a' is not coprime with 26. Please choose another value for 'a'.\n");
+        return 1;
+    }
+    printf("Encrypted Text: ");
+    affineEncrypt(plaintext, a, b);
+}
